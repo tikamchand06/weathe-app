@@ -1,3 +1,6 @@
+# weathe-app
+It's a simple weather application developed in reactjs. It shows current weather, forcast weather of next seven days with weather map. One can easily search and view the weather details of any location.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
@@ -400,7 +403,7 @@ export default Button; // Don’t forget to use export default!
 ```
 
 ### `DangerButton.js`
-
+--allow-unrelated-histories
 ```js
 import React, { Component } from 'react';
 import Button from './Button'; // Import a component from another file
