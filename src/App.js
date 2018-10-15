@@ -1,28 +1,40 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Navbar from './components/navbar';
+import CurrenttWeather from './components/currentweather';
+import ForcastWeather from './components/forcastweather';
+import DarkSkyApi from 'dark-sky-api';
+
+DarkSkyApi.apiKey = 'a5286027434a709d97e1418ff5729e34';
+DarkSkyApi.units = 'si';
+DarkSkyApi.extendHourly(true);
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+    state = {
+        location: ''
+    };
+
+    onLocationChange = (latlng) => {
+        console.log(latlng);
+        this.setState({location: latlng});
+    }
+
+    RoundedValue(value){
+        return Math.round(value);
+    }
+
+    render() {
+        const iconUrl = 'https://darksky.net/images/weather-icons/';
+
+        return (
+            <React.Fragment>
+                <Navbar onLocationChange={this.onLocationChange}/>
+                <main className="container">
+                    <CurrenttWeather DarkSkyApi={DarkSkyApi} iconUrl={iconUrl} RoundedValue={this.RoundedValue} location={this.state.location}/>
+                    <ForcastWeather DarkSkyApi={DarkSkyApi} iconUrl={iconUrl} RoundedValue={this.RoundedValue} location={this.state.location}/>
+                </main>
+            </React.Fragment>
+        );
+    }
 }
 
 export default App;
