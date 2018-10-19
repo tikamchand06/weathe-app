@@ -10,12 +10,56 @@ DarkSkyApi.extendHourly(true);
 
 class App extends Component {
     state = {
-        location: ''
+        isLoading: true,
+        location: {
+            name: 'Jaipur, Rajasthan (India)',
+            latLng: {
+                lat: '',
+                lng: ''
+            },
+            timezone: ''
+        },
+        current: {},
+        forcast: {},
+        hourly: {},
+        updateTime: '',
+        iconUrl: 'https://darksky.net/images/weather-icons/'
     };
 
-    onLocationChange = (latlng) => {
-        console.log(latlng);
-        this.setState({location: latlng});
+    getWeatherData(pos = undefined) {
+        if(pos) {
+            const position = {
+                latitude: pos.latLng.lat,
+                longitude: pos.latLng.lng
+            };
+
+            DarkSkyApi.loadCurrent(position).then(result => console.log(result));
+            DarkSkyApi.loadItAll(position).then(result => {
+
+                var newLocationState = {
+                    name: pos.name,
+                    latLng: {
+                        lat: result.latitude,
+                        lng: result.longitude
+                    },
+                    timezone: result.timezone
+                };
+
+                this.setState({
+                    isLoading: false,
+                    location: newLocationState,
+                    current: result.currently,
+                    forcast: result.daily,
+                    hourly: result.hourly,
+                    updateTime: result.updatedDateTime.format('Do MMM, YYYY h:mm:ss A')
+                })
+            });
+        }
+    }
+
+    onLocationChange = (latLng) => {
+        console.log(latLng);
+        this.getWeatherData(latLng);
     }
 
     RoundedValue(value){
@@ -23,14 +67,13 @@ class App extends Component {
     }
 
     render() {
-        const iconUrl = 'https://darksky.net/images/weather-icons/';
 
         return (
             <React.Fragment>
                 <Navbar onLocationChange={this.onLocationChange}/>
                 <main className="container">
-                    <CurrenttWeather DarkSkyApi={DarkSkyApi} iconUrl={iconUrl} RoundedValue={this.RoundedValue} location={this.state.location}/>
-                    <ForcastWeather DarkSkyApi={DarkSkyApi} iconUrl={iconUrl} RoundedValue={this.RoundedValue} location={this.state.location}/>
+                    <CurrenttWeather RoundedValue={this.RoundedValue} weatherData={this.state}/>
+                    <ForcastWeather RoundedValue={this.RoundedValue} weatherData={this.state}/>
                 </main>
             </React.Fragment>
         );

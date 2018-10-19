@@ -4,44 +4,22 @@ import WeatherMap from './weathermap';
 import OneDayWeather from './OneDayWeather'
 
 class ForcastWeather extends Component {
-	state = {
-        isLoading: true,
-        forcast: {},
-        dailyData: [],
-        updateTime: null
-    }
-
-    componentDidMount() {
-        this.props.DarkSkyApi.loadForecast().then(result => {
-            console.log('forcast:', result.daily);
-            this.setState({
-                isLoading: false,
-                forcast: result,
-                dailyData: result.daily.data,
-                updateTime: result.daily.updatedDateTime
-            })
-        });
-    }
-
 	render () {
-        const {isLoading, forcast, dailyData, updateTime} = this.state;
-        const {RoundedValue} = this.props;
+        const {RoundedValue, weatherData} = this.props;
+        const {isLoading, forcast, location, iconUrl} = weatherData;
+        const dailyData = forcast.data || [];
 
 		return (
             <div>
     			<div className="weather-container">
-    				<h3>Forcast Weather (Next 7 Days)
-                        { updateTime && (
-                            <small className="last-updated"><b>Last Updated:</b> {updateTime.format('Do MMM, YYYY h:mm:ss A')}</small>
-                        )}
-                    </h3>
+    				<h3>Forcast Weather (Next 7 Days)</h3>
                     <div className="d-flex forcast-weather p-1">
                         {!isLoading && dailyData.map((data, index) =>
                             <OneDayWeather
                                 data={data}
                                 key={index}
                                 RoundedValue={RoundedValue}
-                                iconUrl={this.props.iconUrl}
+                                iconUrl={iconUrl}
                             />
                         )}
                     </div>
@@ -49,7 +27,7 @@ class ForcastWeather extends Component {
                     {isLoading && (<Loader />)}
     			</div>
                 <div className="weather-container">
-                    <WeatherMap latitude={forcast.latitude} longitude={forcast.longitude}/>
+                    <WeatherMap isLoading={isLoading} latitude={location.latLng.lat} longitude={location.latLng.lng}/>
                 </div>
             </div>
 		);

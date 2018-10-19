@@ -28,30 +28,27 @@ class Location extends Component {
  
     render() {
         return (
-            <PlacesAutocomplete
-                value={this.state.address}
-                onChange={this.handleChange}
-                onSelect={this.handleSelect}
-            >
-            {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                <div>
-                    <input
-                        {...getInputProps({placeholder: 'Search Places ...', className: 'form-control mr-sm-2 location-search-input'})}
-                    />
-                    <div className="autocomplete-dropdown-container">
-                        {loading && <Loader />}
-                        {suggestions.map(suggestion => {
-                            const className = suggestion.active ? 'suggestion-item--active' : 'suggestion-item';
-                            return (
-                                <div {...getSuggestionItemProps(suggestion, {className})}>
-                                    <span>{suggestion.description}</span>
-                                </div>
-                            );
-                        })}
+            <PlacesAutocomplete value={this.state.address} onChange={this.handleChange} onSelect={this.handleSelect}>
+                {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                    <div>
+                        <input
+                            {...getInputProps({placeholder: 'Search location...', className: 'form-control mr-sm-2 location-search-input'})}
+                        />
+                        <ul className="list-group autocomplete-dropdown-container">
+                            {loading && <Loader />}
+                            {suggestions.map(suggestion => {
+                                let className = 'list-group-item list-group-item-action';
+                                className += suggestion.active ? className + 'active' : className;
+                                return (
+                                    <a href="#" {...getSuggestionItemProps(suggestion, {className})} title={suggestion.description}>
+                                        <span>{suggestion.description}</span>
+                                    </a>
+                                );
+                            })}
+                        </ul>
                     </div>
-                </div>
-            )}
-        </PlacesAutocomplete>
+                )}
+            </PlacesAutocomplete>
         );
     }
 }

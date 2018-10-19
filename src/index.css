@@ -60,24 +60,15 @@ input.location-search-input {
     width: 220px;
     margin-right: 0 !important;
 }
-div.suggestion-item {
-    padding: 5px 8px;
-    border-bottom: 1px solid #EEEEEE;
-    transition: all 0.25s ease-out;
-}
-div.suggestion-item--active {
-    padding: 5px 8px;
-    border-bottom: 1px solid #EEEEEE;
-    background-color: #EEEEEE !important;
-}
-.autocomplete-dropdown-container {
-    max-width: 220px;
-    overflow: auto;
+ul.list-group.autocomplete-dropdown-container {
+    width: 260px;
     position: absolute;
-    z-index: 99999;
-    border: 2px solid #2196f3;
-    border-radius: 4px;
-    background: white;
+    z-index: 999999;
+}
+ul.list-group.autocomplete-dropdown-container > a {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* Loader */

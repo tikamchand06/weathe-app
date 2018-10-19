@@ -2,38 +2,23 @@ import React, {Component} from 'react';
 import Loader from './loader';
 
 class CurrentWeather extends Component {
-	state = {
-        isLoading: true,
-        iconUrl: this.props.iconUrl,
-        current: {},
-        location: this.props.location
-    }
-
-    componentDidMount() {
-        this.props.DarkSkyApi.loadCurrent().then(result => {
-            this.setState({
-                isLoading: false,
-                current: result,
-                location: this.props.location
-            })
-        });
-    }
 
 	render () {
-        const {iconUrl, isLoading, location} = this.state;
-        const {locationName, latlng} = this.state.location;
-        const {dewPoint, humidity, icon, pressure, summary, temperature, dateTime, uvIndex, visibility, windDirection, windSpeed} = this.state.current;
+        const {RoundedValue, weatherData} = this.props;
+        const {isLoading, current, location, iconUrl, updateTime} = weatherData;
+        const {dewPoint, humidity, icon, pressure, summary, temperature, uvIndex, visibility, windDirection, windSpeed} = current;
         const weatherIcon = iconUrl + icon + '.png';
-        const {RoundedValue} = this.props;
-        console.log(locationName, latlng, this.props);
+        
 		return (
 			<div className="weather-container">
                 <div className="card">
                     <div className="card-body">
                         <div className="justify-content-between">
                             <h3 className="p-2 justify-content-between">
-                                <span>{locationName}</span>
-                                <small className="current-time">{dateTime && dateTime.format('Do MMM, YYYY h:mm:ss A')}</small>
+                                <span>{location.name}</span>
+                                {updateTime && (
+                                    <small className="last-updated"><b>Last Updated:</b> {updateTime}</small>
+                                )}
                             </h3>
                             {!isLoading && (
                                 <div>
