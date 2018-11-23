@@ -12,7 +12,7 @@ class App extends Component {
     state = {
         isLoading: true,
         location: {
-            name: 'Jaipur, Rajasthan (India)',
+            name: 'NA',
             latLng: {
                 lat: '',
                 lng: ''
