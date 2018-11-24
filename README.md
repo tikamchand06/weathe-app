@@ -1,4 +1,4 @@
-# weathe-app
+# Weather App
 It's a simple weather application developed in reactjs. It shows current weather, forcast weather of next seven days with weather map. One can easily search and view the weather details of any location.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
