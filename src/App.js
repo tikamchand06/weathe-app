@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Navbar from './components/navbar';
+import Footer from './components/footer';
+import Search from './components/search';
 import CurrenttWeather from './components/currentweather';
 import ForcastWeather from './components/forcastweather';
 import DarkSkyApi from 'dark-sky-api';
@@ -58,7 +60,6 @@ class App extends Component {
     }
 
     onLocationChange = (latLng) => {
-        console.log(latLng);
         this.getWeatherData(latLng);
     }
 
@@ -75,6 +76,8 @@ class App extends Component {
                     <CurrenttWeather RoundedValue={this.RoundedValue} weatherData={this.state}/>
                     <ForcastWeather RoundedValue={this.RoundedValue} weatherData={this.state}/>
                 </main>
+                <Footer/>
+                {this.state.location.name === 'NA' && (<Search onLocationChange={this.onLocationChange}/>)}
             </React.Fragment>
         );
     }

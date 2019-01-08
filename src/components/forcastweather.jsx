@@ -13,7 +13,7 @@ class ForcastWeather extends Component {
             <div>
     			<div className="weather-container">
     				<h3>Forcast Weather (Next 7 Days)</h3>
-                    <div className="d-flex forcast-weather p-1">
+                    <div className="d-flex forcast-weather tcm-scroll p-1">
                         {!isLoading && dailyData.map((data, index) =>
                             <OneDayWeather
                                 data={data}
