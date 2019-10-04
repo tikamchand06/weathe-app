@@ -1,20 +1,19 @@
-import React, {Component} from 'react';
+import React from 'react';
+import { Menu } from 'semantic-ui-react';
 import Location from './location';
 
-class Navbar extends Component {
-	render() {
-		return (
-			<nav className="navbar navbar-light bg-light shadow-sm">
-				<div className="container">
-					<span className="navbar-brand mb-0 h1">Weather App</span>
-				
-					<form className="form-inline my-2 my-lg-0">
-						<Location onLocationChange={this.props.onLocationChange}/>
-					</form>
-				</div>
-			</nav>
-		);
-	}
-}
+const Navbar = ({ onLocationChange }) => {
+  return (
+    <Menu fixed="top" borderless>
+      <Menu.Item header>TCM Weather</Menu.Item>
+      <Menu.Menu position="right">
+        <Menu.Item>
+          {/* <Input icon="search" placeholder="Search..." /> */}
+          <Location onLocationChange={onLocationChange} />
+        </Menu.Item>
+      </Menu.Menu>
+    </Menu>
+  );
+};
 
 export default Navbar;

@@ -1,37 +1,62 @@
-import React, {Component} from 'react';
-import Loader from './loader';
-import WeatherMap from './weathermap';
-import OneDayWeather from './OneDayWeather'
+import React from 'react';
+import { Segment, Header, Card, Image, List } from 'semantic-ui-react';
+import { RoundedValue, TimeString, DayString, getWeatherIcon, convertToDegree } from './helpers';
 
-class ForcastWeather extends Component {
-	render () {
-        const {RoundedValue, weatherData} = this.props;
-        const {isLoading, forcast, location, iconUrl} = weatherData;
-        const dailyData = forcast.data || [];
+const ForcastWeather = ({ data }) => {
+  const { isLoading, forcast } = data;
+  const dailyData = forcast.data || [];
 
-		return (
-            <div>
-    			<div className="weather-container">
-    				<h3>Forcast Weather (Next 7 Days)</h3>
-                    <div className="d-flex forcast-weather tcm-scroll p-1">
-                        {!isLoading && dailyData.map((data, index) =>
-                            <OneDayWeather
-                                data={data}
-                                key={index}
-                                RoundedValue={RoundedValue}
-                                iconUrl={iconUrl}
-                            />
-                        )}
-                    </div>
+  const OneDayInfo = ({ current }) => {
+    const currentDetails = [
+      { title: 'Sun Rise', value: TimeString(current.sunriseDateTime) },
+      { title: 'Sun Set', value: TimeString(current.sunsetDateTime) },
+      { title: 'Wind', value: `${current.windSpeed}m/s` },
+      { title: 'Wind Direction', value: current.windDirection },
+      { title: 'Humidity', value: `${(current.humidity * 100).toFixed(0)}%` },
+      { title: 'Dew Point', value: RoundedValue(current.dewPoint) },
+      { title: 'UV Index', value: RoundedValue(current.uvIndex) },
+      { title: 'Visibility', value: `${RoundedValue(current.dewPoint)}km` },
+      { title: 'Pressure', value: `${RoundedValue(current.dewPoint)}hPa` }
+    ];
 
-                    {isLoading && (<Loader />)}
-    			</div>
-                <div className="weather-container">
-                    <WeatherMap isLoading={isLoading} latitude={location.latLng.lat} longitude={location.latLng.lng}/>
-                </div>
-            </div>
-		);
-	}
-}
+    return (
+      <List>
+        {currentDetails.map((item, key) => (
+          <List.Item key={key}>
+            <strong>{item.title}:</strong> {item.value}
+          </List.Item>
+        ))}
+      </List>
+    );
+  };
+
+  return (
+    <Segment loading={isLoading} style={{ minHeight: '50vh' }}>
+      <Header as="h3">Forcast Weather (Next 7 Days)</Header>
+      <Card.Group itemsPerRow={4}>
+        {dailyData.map((current, key) => (
+          <Card key={key}>
+            <Card.Content>
+              <Card.Header>
+                {current.dateTime && DayString(current.dateTime)}
+                <small> {current.dateTime && current.dateTime.format('Do MMM, YYYY')}</small>
+              </Card.Header>
+              <Card.Meta>
+                <Image src={getWeatherIcon(current.icon)} size="tiny" inline />
+                <span>
+                  {convertToDegree(current.temperatureMax)}/{convertToDegree(current.temperatureMin)}
+                </span>
+                <p>{current.summary}</p>
+              </Card.Meta>
+              <Card.Description>
+                <OneDayInfo current={current} />
+              </Card.Description>
+            </Card.Content>
+          </Card>
+        ))}
+      </Card.Group>
+    </Segment>
+  );
+};
 
 export default ForcastWeather;

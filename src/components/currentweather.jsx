@@ -1,51 +1,54 @@
-import React, {Component} from 'react';
-import Loader from './loader';
+import React from 'react';
+import { Segment, Header, Container, Image, List, Grid } from 'semantic-ui-react';
+import { RoundedValue, getWeatherIcon, convertToDegree } from './helpers';
 
-class CurrentWeather extends Component {
+const CurrentWeather = ({ data }) => {
+  const { isLoading, current, location, updateTime } = data;
+  const currentDetails = [
+    { title: 'Wind', value: `${current.windSpeed}m/s` },
+    { title: 'Wind Direction', value: current.windDirection },
+    { title: 'Humidity', value: `${(current.humidity * 100).toFixed(0)}%` },
+    { title: 'Dew Point', value: RoundedValue(current.dewPoint) },
+    { title: 'UV Index', value: RoundedValue(current.uvIndex) },
+    { title: 'Visibility', value: `${RoundedValue(current.dewPoint)}km` },
+    { title: 'Pressure', value: `${RoundedValue(current.dewPoint)}hPa` }
+  ];
 
-	render () {
-        const {RoundedValue, weatherData} = this.props;
-        const {isLoading, current, location, iconUrl, updateTime} = weatherData;
-        const {dewPoint, humidity, icon, pressure, summary, temperature, uvIndex, visibility, windDirection, windSpeed} = current;
-        const weatherIcon = iconUrl + icon + '.png';
-        
-		return (
-			<div className="weather-container">
-                <div className="card">
-                    <div className="card-body">
-                        <div className="justify-content-between">
-                            <h3 className="p-2 justify-content-between">
-                                <span>{location.name}</span>
-                                {updateTime && (
-                                    <small className="last-updated"><b>Last Updated:</b> {updateTime}</small>
-                                )}
-                            </h3>
-                            {!isLoading && (
-                                <div>
-                                <h2 className="p-2">
-                                    <img src={weatherIcon} className="img-responsive weather-icon" alt="weather-icon"/>
-                                    <span className="temperature p-2">{RoundedValue(temperature)}<sup>&deg;</sup></span>
-                                    <span className="summary">{summary}</span>
-                                </h2>
+  return (
+    <Segment style={{ minHeight: '30vh' }} loading={isLoading}>
+      <Header as="h2">
+        {location && <span>{location.name}</span>}
+        {updateTime && (
+          <small className="last-updated">
+            <b>Last Updated:</b> {updateTime}
+          </small>
+        )}
+      </Header>
+      <Container>
+        <Grid>
+          <Grid.Row verticalAlign="middle">
+            <Grid.Column width="2">
+              <Image src={getWeatherIcon(current.icon)} />
+            </Grid.Column>
+            <Grid.Column width="14">
+              <Header as="h1">
+                {convertToDegree(current.temperature)} {current.summary}
+                <Header.Subheader>Feels like {convertToDegree(current.apparentTemperature)}</Header.Subheader>
+              </Header>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
 
-                                <div className="p-2">
-                                    <span className="misc-info"><b>Wind:</b> {windSpeed}m/s</span>
-                                    <span className="misc-info"><b>Wind Direction:</b> {windDirection}</span>
-                                    <span className="misc-info"><b>Humidity:</b> {(humidity*100).toFixed(0)}%</span>
-                                    <span className="misc-info"><b>Dew Pt:</b> {RoundedValue(dewPoint)}</span>
-                                    <span className="misc-info"><b>UV Index:</b> {RoundedValue(uvIndex)}</span>
-                                    <span className="misc-info"><b>Visibility:</b> {RoundedValue(visibility)} km</span>
-                                    <span className="misc-info"><b>Pressure:</b> {RoundedValue(pressure)} hPa</span>
-                                </div>
-                                </div>
-                            )}
-                            {isLoading && (<Loader />)}
-                        </div>
-                    </div>
-                </div>
-			</div>
-		);
-	}
-}
+        <List bulleted horizontal>
+          {currentDetails.map((item, key) => (
+            <List.Item key={key}>
+              <strong>{item.title}:</strong> {item.value}
+            </List.Item>
+          ))}
+        </List>
+      </Container>
+    </Segment>
+  );
+};
 
 export default CurrentWeather;
