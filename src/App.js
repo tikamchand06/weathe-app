@@ -25,7 +25,7 @@ const App = () => {
     if (localStorage.location) {
       location = JSON.parse(localStorage.location);
     } else {
-      const userLocation = await fetch(`http://ipinfo.io?token=${process.env.REACT_APP_IPINFO_TOKEN}`).then(res => res.json());
+      const userLocation = await fetch(`https://ipinfo.io?token=${process.env.REACT_APP_IPINFO_TOKEN}`).then(res => res.json());
       const latLng = userLocation.loc.split(',');
       location = {
         ...userLocation,
@@ -77,7 +77,7 @@ const App = () => {
   }, []);
 
   return (
-    <Container fluid>
+    <Container fluid style={{ marginTop: '6rem' }}>
       <Navbar onLocationChange={getWeatherData} />
       <Container>
         <CurrenttWeather data={state} />

@@ -19,7 +19,7 @@ const CurrentWeather = ({ data }) => {
       <Header as="h2">
         {location && <span>{location.name}</span>}
         {updateTime && (
-          <small className="last-updated">
+          <small style={{ float: 'right' }}>
             <b>Last Updated:</b> {updateTime}
           </small>
         )}

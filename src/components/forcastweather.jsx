@@ -39,11 +39,11 @@ const ForcastWeather = ({ data }) => {
             <Card.Content>
               <Card.Header>
                 {current.dateTime && DayString(current.dateTime)}
-                <small> {current.dateTime && current.dateTime.format('Do MMM, YYYY')}</small>
+                <small style={{ float: 'right' }}>{current.dateTime && current.dateTime.format('Do MMM, YYYY')}</small>
               </Card.Header>
               <Card.Meta>
                 <Image src={getWeatherIcon(current.icon)} size="tiny" inline />
-                <span>
+                <span style={{ fontSize: '2rem' }}>
                   {convertToDegree(current.temperatureMax)}/{convertToDegree(current.temperatureMin)}
                 </span>
                 <p>{current.summary}</p>
