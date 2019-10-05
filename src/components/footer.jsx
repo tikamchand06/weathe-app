@@ -11,7 +11,7 @@ const Footer = () => {
   ];
 
   return (
-    <Container fluid style={{ background: '#F5F5F5', padding: '1rem' }}>
+    <Container fluid className="footer">
       <Grid className="footer">
         <Grid.Row verticalAlign="middle">
           <Grid.Column width="8" textAlign="left">

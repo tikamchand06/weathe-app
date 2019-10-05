@@ -23,7 +23,8 @@ const ForcastWeather = ({ data }) => {
       <List>
         {currentDetails.map((item, key) => (
           <List.Item key={key}>
-            <strong>{item.title}:</strong> {item.value}
+            <strong>{item.title}:</strong>
+            <span>{item.value}</span>
           </List.Item>
         ))}
       </List>

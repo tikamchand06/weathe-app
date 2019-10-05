@@ -18,11 +18,7 @@ const CurrentWeather = ({ data }) => {
     <Segment style={{ minHeight: '30vh' }} loading={isLoading}>
       <Header as="h2">
         {location && <span>{location.name}</span>}
-        {updateTime && (
-          <small style={{ float: 'right' }}>
-            <b>Last Updated:</b> {updateTime}
-          </small>
-        )}
+        <Header.Subheader>Last Updated: {updateTime}</Header.Subheader>
       </Header>
       <Container>
         <Grid>

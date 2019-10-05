@@ -8,7 +8,6 @@ const Navbar = ({ onLocationChange }) => {
       <Menu.Item header>TCM Weather</Menu.Item>
       <Menu.Menu position="right">
         <Menu.Item>
-          {/* <Input icon="search" placeholder="Search..." /> */}
           <Location onLocationChange={onLocationChange} />
         </Menu.Item>
       </Menu.Menu>

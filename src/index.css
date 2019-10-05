@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600');
+
+body .ui.header,
+body .ui.header .sub.header,
+body .ui.horizontal.list > .item,
+body .ui.menu .header.item,
+.ui.card > .content > .header,
+.ui.cards > .card > .content > .header,
+body > * {
+  font-family: 'Source Sans Pro', sans-serif !important;
+}
+body .ui.list > .item {
+  display: flex;
+}
+body .ui.list > .item span,
+body .ui.list > .item strong {
+  flex: 1;
+}
+body .main-container {
+  margin-top: 6rem;
+}
+body .ui.container.footer {
+  background: rgb(245, 245, 245);
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+@media screen and (max-width: 720px) {
+  body .ui.container.main-container {
+    margin: 6rem auto auto auto !important;
+  }
+  .ui.grid > .row > [class*='two wide'].column {
+    flex: 0.3;
+  }
+  .ui.grid > .row > [class*='fourteen wide'].column {
+    flex: 1;
+  }
+  .ui.horizontal.list:not(.celled) > .item:first-child {
+    margin-left: 1.75rem !important;
+  }
+  .ui.horizontal.bulleted.list > .item:first-child::before,
+  ul.ui.horizontal.bulleted.list li:first-child::before {
+    display: block;
+  }
+  .ui.cards > .card {
+    width: 100% !important;
+  }
+  body .ui.container.footer {
+    margin: 1rem 0 0 0 !important;
+  }
+  body .ui.container.footer .ui.grid > .row > [class*='eight wide'].column {
+    width: 100% !important;
+    text-align: center !important;
+    margin: 0.5rem auto;
+  }
+}

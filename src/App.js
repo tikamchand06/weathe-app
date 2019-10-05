@@ -77,7 +77,7 @@ const App = () => {
   }, []);
 
   return (
-    <Container fluid style={{ marginTop: '6rem' }}>
+    <Container fluid className="main-container">
       <Navbar onLocationChange={getWeatherData} />
       <Container>
         <CurrenttWeather data={state} />
